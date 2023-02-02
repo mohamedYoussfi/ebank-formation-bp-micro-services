@@ -1,0 +1,86 @@
+type Query {
+    allAccounts : [BankAccount]
+    accountById(id :String) : BankAccount,
+    accountsByStatus (status : AccountStatus) : [BankAccount]
+    getBankStats: GetBankStatsResponse
+    accountDetails(accountId : String) : AccountDetails
+}
+type Mutation {
+    saveNewAccount(request:SaveNewAccountRequest) : BankAccount
+    debitAccount (request : DebitAccountRequest) : BankAccount
+    creditAccount (request : CreditAccountRequest ) : BankAccount
+    transfer (request : TransferRequest) : TransferResponse
+    changeAccountStatus(request : ChangeAccountStatusRequest) : BankAccount
+}
+type BankAccount {
+    id : String,
+    createdAt : String,
+    balance : Float,
+    type : AccountType,
+    status : AccountStatus
+    customerId : Float
+}
+type Transaction {
+    id : Int,
+    description : String,
+    date : String,
+    amount : Float,
+    accountId : String,
+    type : TransactionType
+}
+type AccountDetails {
+    accountId : String,
+    balance : Float,
+    transactions : [Transaction],
+    customerId : Float,
+    customerName : String,
+    customerEmail : String
+}
+
+type GetBankStatsResponse{
+    totalBalance : Float,
+    numberOfAccounts : Int,
+    avgBalance : Float,
+    minBalance : Float,
+    maxBalance : Float
+}
+
+input SaveNewAccountRequest {
+    initialBalance : Float,
+    currency : String,
+    type : String
+}
+
+input DebitAccountRequest{
+    accountId : String,
+    amount : Float
+}
+input CreditAccountRequest{
+    accountId : String,
+    amount : Float
+}
+input TransferRequest{
+    accountIdSource : String,
+    accountIdDestination : String,
+    amount : Float
+}
+input ChangeAccountStatusRequest{
+    accountId : String,
+    status : String
+}
+type TransferResponse {
+    accountIdSource : String,
+    accountIdDestination : String,
+    amount : Float,
+    message : String
+}
+
+enum AccountStatus {
+    CREATED, ACTIVATED, SUSPENDED, BLOCKED
+}
+enum AccountType {
+    SAVING_ACCOUNT, CURRENT_ACCOUNT
+}
+enum TransactionType {
+    DEBIT, CREDIT
+}

@@ -1,0 +1,22 @@
+type Query {
+    listCustomers:[Customer],
+    searchCustomers (keyword :String) : [Customer],
+    getCustomerById(id : Int) : Customer
+}
+type Mutation {
+    saveNewCustomer(request: CustomerRequest) : Customer,
+    updateCustomer(request: CustomerRequest) : Customer,
+    deleteCustomer(id : Int) : Boolean
+}
+type Customer {
+    id : Int,
+    firstName : String,
+    lastName : String,
+    email : String
+}
+input CustomerRequest{
+    id : Int,
+    firstName : String,
+    lastName : String,
+    email : String
+}

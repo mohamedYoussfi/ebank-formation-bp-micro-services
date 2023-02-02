@@ -1,0 +1,12 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id : r1
+#          uri: http://localhost:8087
+#          predicates:
+#            - Path= /accounts/**
+#        - id : r2
+#          uri: http://localhost:8089
+#          predicates:
+#            - Path= /customers/**
